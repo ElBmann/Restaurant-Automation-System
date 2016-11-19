@@ -14,7 +14,7 @@
  * Void Item,OrderList
  *
  */
-public class Order_list {
+public class GetOrder_list() {
     /**
      * This method will be used to Void items after the order has been placed.
      *
