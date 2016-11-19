@@ -16,21 +16,19 @@
  */
 public class Order_list {
     /**
-     * This method will be used to Void items after the order has been placed.
-     *
-     * @param Empty
-     *@return will retrun true if there are items to void and false if empty
+     * Void items after the order has been placed.
+     * @return if true there are items to void and if false nothing to void
+     * 
      */
     public boolean VoidItem() {
 
     }
 
     /**
-     * Will Display the list of items in each order from an array list.
+     *  Display's the list of items in each order. The array will be  from an array list .
      *
      * @param Empty
-     * @return Will return an array list of orders that are added into the system
-     *
+     * @return using JDBC the items stored in the database will be place in an array and return the list of orders.
      */
     public order[] ViewWaitingOrder(){
 
