@@ -25,10 +25,9 @@ public class Order_list {
     }
 
     /**
-     *  Display's the list of items in each order. The array will be  from an array list .
-     *
-     * @param Empty
-     * @return using JDBC the items stored in the database will be place in an array and return the list of orders.
+     *  
+     * using JDBC the items stored in the database will be place in an array and return the list of orders.
+     * @return List of items in each order.
      */
     public order[] ViewWaitingOrder(){
 
