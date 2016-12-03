@@ -62,3 +62,339 @@ public class JDBCOrder_List {
     	
     }
 }
+
+------------------------------------------------------------------------------------------------------------------------------------
+	package RAS;
+
+//import java.util.ArrayList;
+//import java.util.List;
+import java.sql.*;
+
+
+public class JDBC_OrderList {
+	
+	public Statement myStat;
+	public ResultSet myRs;
+	public int exc;
+	
+	Connection conn = Driver.getConnection();
+	
+	public boolean SendOrder(int tableNum, String accName,String order){
+		
+		try{	
+			//1: Create a statement 
+			myStat = conn.createStatement();
+			
+			//2: Execute SQL
+			exc = myStat.executeUpdate("INSERT INTO Orders (Table_Num,Acc_Name,Item_List,Order_Total) VALUES ("+tableNum+",'"+accName+"','"+order+"',23.23);");
+			           
+			//3: Process the result set
+			/*while (myRs.next()){
+				resultStr.add(myRs.getString("first_name")+" "+myRs.getString("last_name"));
+			}*/
+		}
+		//catch any exception
+		catch(Exception e){
+			e.printStackTrace();
+		}
+		
+
+		
+		return true;
+		
+	}
+
+}
+
+-------------------------------------------------------------------------------------------------------------------------------------------------
+		package Final_Project;
+
+//import java.util.ArrayList;
+		import java.util.List;
+		import java.sql.*;
+
+
+
+public class JDBC_OrderList {
+
+	public Statement myStat;
+	public ResultSet myRs;
+	public int exc;
+
+	Connection conn = Driver.getConnection();
+
+	public boolean SendOrder(int tableNum, String accName,String order){
+
+		try{
+			//1: Create a statement
+			myStat = conn.createStatement();
+
+			//2: Execute SQL
+			exc = myStat.executeUpdate("INSERT INTO Orders (Table_Num,Acc_Name,Item_List,Order_Total) VALUES ("+tableNum+",'"+accName+"','"+order+"',23.23);");
+
+			//3: Process the result set
+			/*while (myRs.next()){
+				resultStr.add(myRs.getString("first_name")+" "+myRs.getString("last_name"));
+			}*/
+		}
+		//catch any exception
+		catch(Exception e){
+			e.printStackTrace();
+		}
+
+
+
+		return true;
+
+
+	}
+	public boolean VoidItem(int item_num) {
+		try{
+
+			Statement myStmt = conn.createStatement();//...Create Statement
+			ResultSet myRs = myStmt.executeQuery("select * from Orders");//...Execute SQL query Table name is employee
+
+
+			//String sql ="delete from orders where Order_Num ='Item_List'";
+			String sql ="delete from orders" + "where Item_List = item_num";
+			int rowsAffected = myStmt.executeUpdate(sql);
+			myStmt.executeUpdate(sql);
+		}
+		catch(Exception exc){
+			exc.printStackTrace();
+
+		}
+		return true;
+
+	}
+	public String veiw_Waiting_Order(){
+		String order_list = "";
+
+		try{
+			Statement myStmt = conn.createStatement();//...Create Statement
+			ResultSet myRs = myStmt.executeQuery("select * from Orders");//...Execute SQL query Table name is employee
+
+
+
+			while (myRs.next()){
+
+
+				order_list = myRs.getInt("Order_Num") + ", " + myRs.getInt("Table_Num") +", " + myRs.getString("Item_List")+", "+myRs.getString("Order_Status");
+
+			}
+
+		}
+		catch(Exception exc){
+			exc.printStackTrace();
+
+		}
+		return order_list;
+
+
+
+	}
+}
+--------------------------------------------------------------------------------------------------------------------------------------------------
+		package Final_Project;
+
+//import java.util.ArrayList;
+		import java.util.List;
+		import java.sql.*;
+		import java.util.ArrayList;
+		import java.util.Arrays;
+
+
+
+
+public class JDBC_OrderList {
+
+	public Statement myStat;
+	public ResultSet myRs;
+	public int exc;
+
+	Connection conn = Driver.getConnection();
+
+	public boolean SendOrder(int tableNum, String accName,String order){
+
+		try{
+			//1: Create a statement
+			myStat = conn.createStatement();
+
+			//2: Execute SQL
+			exc = myStat.executeUpdate("INSERT INTO Orders (Table_Num,Acc_Name,Item_List,Order_Total) VALUES ("+tableNum+",'"+accName+"','"+order+"',23.23);");
+
+			//3: Process the result set
+			/*while (myRs.next()){
+				resultStr.add(myRs.getString("first_name")+" "+myRs.getString("last_name"));
+			}*/
+		}
+		//catch any exception
+		catch(Exception e){
+			e.printStackTrace();
+		}
+
+
+
+		return true;
+
+
+	}
+	public boolean VoidItem(int item_num) {
+		try{
+
+			Statement myStmt = conn.createStatement();//...Create Statement
+			ResultSet myRs = myStmt.executeQuery("select * from Orders");//...Execute SQL query Table name is employee
+
+
+			//String sql ="delete from orders where Order_Num ='Item_List'";
+			String sql ="delete from orders" + "where Item_List = item_num";
+			int rowsAffected = myStmt.executeUpdate(sql);
+			myStmt.executeUpdate(sql);
+		}
+		catch(Exception exc){
+			exc.printStackTrace();
+
+		}
+		return true;
+
+	}
+
+
+	public String veiw_Waiting_Order(){
+		String order_list = "";
+
+		try{
+			Statement myStmt = conn.createStatement();//...Create Statement
+			ResultSet myRs = myStmt.executeQuery("select * from Orders");//...Execute SQL query Table name is employee
+
+
+
+			List<String> firstCol = new ArrayList<String>();//close
+			List<String> secondCol = new ArrayList<String>();
+			while(myRs.next()){
+				firstCol.add(myRs.getString("Order_Num"));
+				secondCol.add(myRs.getString("Table_Num"));
+				order_list = myRs.getString("Order_Num");
+			}
+
+
+			//order_list = (firstCol + secondCol);//myRs.getInt("Order_Num") + ", " + myRs.getInt("Table_Num") +", " + myRs.getString("Item_List")+", "+myRs.getString("Order_Status");
+
+
+
+		}
+		catch(Exception exc){
+			exc.printStackTrace();
+
+		}
+		return order_list;
+
+
+
+	}
+}
+-----------------------------------------------------------------------------------------------------------------------------------------------------
+		package Final_Project;
+
+//import java.util.ArrayList;
+		import java.util.List;
+		import java.sql.*;
+		import java.util.ArrayList;
+		import java.util.Arrays;
+
+
+
+public class JDBC_OrderList {
+
+	public Statement myStat;
+	public ResultSet myRs;
+	public int exc;
+
+	Connection conn = Driver.getConnection();
+
+	public boolean SendOrder(int tableNum, String accName,String order){
+
+		try{
+			//1: Create a statement
+			myStat = conn.createStatement();
+
+			//2: Execute SQL
+			exc = myStat.executeUpdate("INSERT INTO Orders (Table_Num,Acc_Name,Item_List,Order_Total) VALUES ("+tableNum+",'"+accName+"','"+order+"',23.23);");
+
+			//3: Process the result set
+			/*while (myRs.next()){
+				resultStr.add(myRs.getString("first_name")+" "+myRs.getString("last_name"));
+			}*/
+		}
+		//catch any exception
+		catch(Exception e){
+			e.printStackTrace();
+		}
+
+
+
+		return true;
+
+
+	}
+
+
+	public boolean VoidItem(int item_num) {
+		try{
+
+			Statement myStmt = conn.createStatement();//...Create Statement
+			ResultSet myRs = myStmt.executeQuery("select * from Orders");//...Execute SQL query Table name is employee
+
+
+			//String sql ="delete from orders where Order_Num ='Item_List'";
+			String sql ="delete from orders" + "where Item_List = item_num";
+			int rowsAffected = myStmt.executeUpdate(sql);
+			myStmt.executeUpdate(sql);
+		}
+		catch(Exception exc){
+			exc.printStackTrace();
+
+		}
+		return true;
+
+	}
+
+
+	public String veiw_WaitingOrder(){
+		String order_list = "";
+		String columnValue="";
+
+		try{
+			Statement myStmt = conn.createStatement();//...Create Statement
+
+			ResultSet myRs = myStmt.executeQuery("select * from Orders");//...Execute SQL query Table name is employee
+			ResultSetMetaData rsmd = myRs.getMetaData();
+
+
+			int columnsNumber = rsmd.getColumnCount();
+
+			while (myRs.next()) {
+				for (int i = 1; i <= columnsNumber; i++) {
+					//  System.out.println(" in for loop above if statement: "+ columnValue);
+					if (i > 1)
+						columnValue = myRs.getString(i);
+					order_list = (rsmd.getColumnName(i) + "\n" +columnValue + myRs.getInt("Order_Num") );
+					// System.out.println(" In if statement \n "+"Column value: "+ columnValue +"Coulmn Name:" );
+					// order_list = Odr +" " +Tbl +" "+ Items +" "+ Odr_Stat;
+					//order_list = myRs.getInt("Order_Num") + ", " + myRs.getInt("Table_Num") +", " + myRs.getString("Item_List")+", "+myRs.getString("Order_Status");
+				}
+				// System.out.println("out side of for loop"+columnValue);
+			}
+			System.out.println("columnsNumber: "+columnsNumber);
+		}
+
+		catch(Exception exc){
+			exc.printStackTrace();
+
+		}
+		return order_list;
+
+
+
+	}
+}
