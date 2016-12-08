@@ -81,18 +81,14 @@ public class testMain {
 				break;
 		
 			case 5://void Item
-				   JDBC_OrderList JDBC_OrderList = new JDBC_OrderList();//make sure to change this up later Object
+				  
 				System.out.println("Enter Order Number ");
-				Order order_num = input.nextInt();//issue
+				int order_num = input.nextInt();//issue
 				System.out.println("Enter Item you want removed");
-				String item=input.next();
+				int item=input.nextInt();
 				
-				Statement myStmt = conn.createStatement();//...Create Statement
-				myRs = myStat.executeQuery("select Table_Num  from orders WHERE Order_Num = "+order_num+";");//...Execute SQL query Table chooseing the OrderNum
-				myRs = myStat.executeQuery("select Acc_Name from orders WHERE Order_Num = "+order_num+";");
-				myRs = myStat.executeQuery("select Order_Status from orders WHERE Order_Num = "+order_num+";");
-				myRs = myStat.executeQuery("select Order_Date from orders WHERE Order_Num = "+order_num+";");
-				JDBC_OrderList.VoidItem(item, order_num);///im having an issue here! 
+				jd.VoidItem(item,order_num);///im having an issue here! 
+				break;
 			case 6:
 				System.out.println("You have chosen to exit Peace out");
 				break;
