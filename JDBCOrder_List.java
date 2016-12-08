@@ -98,56 +98,39 @@ public class JDBC_OrderList {
 		return ntotal;
 
 	}
-	public boolean VoidItem(String item,Order order_num) {
+	public boolean VoidItem(int item,int id) {
 		try{
 			String collect="";
-			int id=order_num.getOrderNum();
+			
 			Statement myStmt = conn.createStatement();//...Create Statement
-			myRs = myStat.executeQuery("select * from orders WHERE Order_Num = "+order_num+";");//...Execute SQL query Table chooseing the OrderNum
+			myRs = myStmt.executeQuery("select * from orders WHERE Order_Num = "+id+";");//...Execute SQL query Table chooseing the OrderNum
 
-
-
-			for(int i=0;i<order_num.itemList.length;i++)
-			{
-				if(item.equals(order_num.itemList[i])){
-					order_num.itemList[i].setgetId(0); 
-					order_num.itemList[i].setItemPrice(0);	
-				}
-				else{
-					collect+=order_num.itemList[i];
+			while (myRs.next()){
+				collect=myRs.getString("Item_List");
+				System.out.println("this is collect before for loop: "+ collect);
+				StringBuilder bulid = new StringBuilder(collect);
+				System.out.println("this is b before for loop: "+ bulid);
+				System.out.println("this is charater before for loop: "+ Character.getNumericValue(collect.charAt(0)));
+				for(int i=0;i<collect.length();i++)
+				{
+					int compare=Character.getNumericValue(collect.charAt(i));
+					if(compare==item){//go through each charater and compare it to the item integer thats input issue here fo sho
+                        
+						bulid.deleteCharAt(i); 
+						collect=bulid.toString();
+						intmyRs = myStmt.executeUpdate("update orders set Item_List = '"+collect+"' WHERE Order_Num = "+id+";");
+						
+						System.out.println("this is bulid in if: "+bulid);
+						System.out.println("this is collect in if: "+ collect);
+						
+					}
+					else{
+						System.out.println("False bitch");
+						return false;
+						
+					}
 				}
 			}
-			intmyRs = myStat.executeUpdate("update orders set Item_List = '"+collect+"' WHERE Order_Num = "+id+";");
-			//if(order_num != 0){//most likely wrong
-
-			//Integer.toString(item);
-
-			//				for(int i=0;i<item.length();i++){
-			//
-			//
-			//					//ids[i]=Character.getNumericValue(str.charAt(i));  access the character using .charAt()
-			//					parsedItems[i] = il.selectItem(Character.getNumericValue(str.charAt(i)));
-			//				}
-			//myRs = myStat.executeQuery("select * from orders WHERE Item_List = "+item+";");
-			//myRs.getString("Item_List")== item;
-			//String sql ="delete from orders where Item_List = "+ item + ";";
-			//}
-
-
-			//JDBC_ItemList il = new JDBC_ItemList();
-			//Item[] parsedItems = new Item[50];
-			//create two loops one that looks for 
-			//create an if statment that allows true then void item  
-
-
-
-
-
-			//String sql ="delete from orders where Order_Num ='Item_List'";
-			//String sql ="delete from orders where Item_List = "+ item + ";";
-
-			//int rowsAffected = myStmt.executeUpdate(sql);
-			//myStmt.executeUpdate(sql);
 		}
 		catch(Exception exc){
 			exc.printStackTrace();
