@@ -55,8 +55,8 @@ public class JDBC_OrderList {
 
 
 	}
-	public Order getOrder(int id){
-		Order resultOrder = null;
+	public Orders getOrder(int id){
+		Orders resultOrder = null;
 
 		try{	
 			//1: Create a statement 
@@ -66,9 +66,9 @@ public class JDBC_OrderList {
 			//3: Process the result set
 			while (myRs.next()){
 				String itemidslist = myRs.getString("Item_List");
-				Item[] finalArr=Order.parseId(itemidslist);
+				Item[] finalArr=Orders.parseId(itemidslist);
 
-				resultOrder = new Order(myRs.getInt("Table_Num"), myRs.getString("Acc_Name"),finalArr,myRs.getInt("Order_Num"), myRs.getDouble("Order_Total"));
+				resultOrder = new Orders(myRs.getInt("Table_Num"), myRs.getString("Acc_Name"),finalArr,myRs.getInt("Order_Num"), myRs.getDouble("Order_Total"));
 				//itemString = resultItem.toString();
 			}
 		}
@@ -79,7 +79,7 @@ public class JDBC_OrderList {
 		return resultOrder;
 
 	}
-	public double applyDiscount(Order order, double percentage){
+	public double applyDiscount(Orders order, double percentage){
 		double total = order.getTotal();
 		int id = order.getOrderNum();
 		double ntotal = total -(total*(percentage/100));
@@ -98,48 +98,7 @@ public class JDBC_OrderList {
 		return ntotal;
 
 	}
-	public boolean VoidItem(int item,int id) {
-		try{
-			String collect="";
-			
-			Statement myStmt = conn.createStatement();//...Create Statement
-			myRs = myStmt.executeQuery("select * from orders WHERE Order_Num = "+id+";");//...Execute SQL query Table chooseing the OrderNum
-
-			while (myRs.next()){
-				collect=myRs.getString("Item_List");
-				System.out.println("this is collect before for loop: "+ collect);
-				StringBuilder bulid = new StringBuilder(collect);
-				System.out.println("this is b before for loop: "+ bulid);
-				System.out.println("this is charater before for loop: "+ Character.getNumericValue(collect.charAt(0)));
-				for(int i=0;i<collect.length();i++)
-				{
-					int compare=Character.getNumericValue(collect.charAt(i));
-					if(compare==item){//go through each charater and compare it to the item integer thats input issue here fo sho
-                        
-						bulid.deleteCharAt(i); 
-						collect=bulid.toString();
-						intmyRs = myStmt.executeUpdate("update orders set Item_List = '"+collect+"' WHERE Order_Num = "+id+";");
-						
-						System.out.println("this is bulid in if: "+bulid);
-						System.out.println("this is collect in if: "+ collect);
-						
-					}
-					else{
-						System.out.println("False bitch");
-						return false;
-						
-					}
-				}
-			}
-		}
-		catch(Exception exc){
-			exc.printStackTrace();
-
-		}
-		return true;
-
-	}
-
+	
 
 	public String veiw_Waiting_Order(){
 		String order_list = "";
