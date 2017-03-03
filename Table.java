@@ -1,7 +1,6 @@
 package Final_Project;
 
-/**
- * @author Rob McCartney, Kwame Mensah
+/*
  * @version 1.0
  * table class
  * allows for the creation of Table objects
