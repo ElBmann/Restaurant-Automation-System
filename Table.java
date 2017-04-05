@@ -1,6 +1,7 @@
-package Final_Project;
+package RAS;
 
-/*
+/**
+ * @author Rob McCartney
  * @version 1.0
  * table class
  * allows for the creation of Table objects
@@ -75,17 +76,6 @@ public class Table {
 		return tableStatus;
 	}
 
-	/**
-	 * setTableStatus method
-	 * changes the table status
-	 * @param s string for the new table status
-	 * @return boolean for success/failure of the status change
-	 */
-	public boolean setTableStatus(String s)
-	{
-		return true;
-	}
-
 	/**    
 	 * toString method
 	 * returns string of all Table elements
@@ -95,6 +85,5 @@ public class Table {
 	{
 		return "Table #"+tableNumber+"  Size="+tableSize+"  Status="+tableStatus;
 	}
-	
 	
 }
