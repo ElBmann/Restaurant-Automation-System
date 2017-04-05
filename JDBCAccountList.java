@@ -1,11 +1,10 @@
-package Final_Project;
-
+package RAS;
 import java.sql.*;
 
 public class JDBCAccountList{
 
 	public static Account JDBCAccountPlaceHolder = new Account();
-	
+
 	//Constructors
 	public JDBCAccountList(){}
 	//End Constructors
@@ -108,7 +107,7 @@ public class JDBCAccountList{
 		}
 		return Name;
 	}
-	
+
 	//Useful for EditEmployee
 	public String JDBCgetPin(int ID){
 		String Pin = "";
@@ -196,6 +195,8 @@ public class JDBCAccountList{
 		String PinCollection = "\tPin: ";
 		String PositionCollection = "\tPos.: ";
 		String SalesCollection = "\tSales: ";
+		String PayRateCollection = "\tPayRate: ";
+		String HoursCollection = "\tHours: ";
 
 		double StoreSales = 0.0;
 
@@ -210,9 +211,43 @@ public class JDBCAccountList{
 			NameCollection += "\t\t" + myRs.getString("Acc_Name") + "\t\t";
 			PinCollection += "\t\t" +myRs.getString("Acc_Pin") + "\t\t";
 			PositionCollection += "\t\t" + myRs.getString("Acc_Position") + "\t\t";
-			SalesCollection += "\t\t" + SalesCollect + "" + "\t\t";
+			SalesCollection += "\t\t$" + SalesCollect + "" + "\t\t";
 
 			StoreSales += SalesCollect;
+
+			//PayRate and Hours determined from position
+			String PayRate = "";
+			String Hours = "";
+			if(myRs.getString("Acc_Position").equals("Manager")){
+				PayRate = "20.0";
+				Hours = "8.0";
+			}
+			else if(myRs.getString("Acc_Position").equals("Server")){
+				PayRate = "10.0";
+				Hours = "10.0";
+			}
+			else if(myRs.getString("Acc_Position").equals("Busboy")){
+				PayRate = "7.0";
+				Hours = "8.0";
+			}
+			else if(myRs.getString("Acc_Position").equals("Waiter")){
+				PayRate = "10.0";
+				Hours = "10.0";
+			}
+			else if(myRs.getString("Acc_Position").equals("Kitchen")){
+				PayRate = "13.0";
+				Hours = "8.0";
+			}
+			else if(myRs.getString("Acc_Position").equals("Cook")){
+				PayRate = "13.0";
+				Hours = "8.0";
+			}
+			else if (myRs.getString("Acc_Position").equals("Host")){
+				PayRate = "15.0";
+				Hours = "8.0";
+			}
+			PayRateCollection += "\t$" + PayRate + "\t\t\t";
+			HoursCollection += "\t\t" + Hours + "\t\t";
 		}
 		}
 		catch(Exception e){
@@ -221,8 +256,8 @@ public class JDBCAccountList{
 		}
 
 		return IDCollection + "\n" + NameCollection + "\n" + PinCollection + "\n"
-		+ PositionCollection + "\n" + SalesCollection + "\n\n\tStore Sales: $" 
-		+ StoreSales + "\n\n";
+		+ PositionCollection + "\n" + SalesCollection + "\n" + PayRateCollection +
+		"\n" + HoursCollection + "\n\n\tStore Sales: $" + StoreSales + "\n\n";
 	}
 
 
