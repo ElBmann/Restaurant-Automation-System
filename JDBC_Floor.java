@@ -1,6 +1,7 @@
-package Final_Project;
+package RAS;
+
 import java.sql.*;
-import Final_Project.Driver;
+import RAS.Driver;
 
 public class JDBC_Floor 
 {
@@ -13,7 +14,7 @@ public class JDBC_Floor
 	
 	public boolean addTable(int number, int size)
 	{
-		String status = "Ready";
+		String status = "Ready"; //Default all tables to Ready
 		int numCheck = searchFloor(number);
 		if(numCheck==-1)
 		{
@@ -109,6 +110,56 @@ public class JDBC_Floor
 			e.printStackTrace();
 		}
 		return r;
+	}
+	
+	public String viewDirtyTables()
+	{
+		String r = "";
+		String status = "Dirty";
+		try
+		{
+			//1: Create a statement 
+			myStat = conn.createStatement();
+			//2: Execute SQL
+			myRs = myStat.executeQuery("select * from RAS_Table WHERE Table_Status = '"+status+"';"); //only selects dirty tables
+			//3: Process the result set
+			while (myRs.next())
+			{
+				r+=("Table #"+myRs.getInt("Table_Num")+"  Size="+myRs.getInt("Table_Size")+"  Status="+myRs.getString("Table_Status")+"\n"); //same as toString
+			}	
+		}
+		catch(Exception e){
+			e.printStackTrace();
+		}
+		if(r.equals(""))
+			return ("There are currently no dirty tables\n");
+		else
+			return r;
+	}
+	
+	public int setTableStatus(int number, String newStatus)
+	{
+		try
+		{
+			String currentStatus = "";
+			//1: Create a statement 
+			myStat = conn.createStatement(); 
+			//2: Execute SQL
+			myRs = myStat.executeQuery("select * from RAS_Table WHERE Table_Num = "+number+";");
+			//3: Process the result set
+			while (myRs.next())
+			{
+				currentStatus = myRs.getString("Table_Status"); 
+			}	
+			if((currentStatus.equals("Dirty") && newStatus.equals("Ready"))||(currentStatus.equals("Ready") && newStatus.equals("Full"))||(currentStatus.equals("Full") && newStatus.equals("Dirty")))
+			{
+				return myStat.executeUpdate("UPDATE RAS_Table set Table_Status = '"+newStatus+"' WHERE Table_Num = "+number+";"); //returns # of updated records
+			}
+		}
+		catch(Exception e){
+			e.printStackTrace();
+		}
+		return 0; //nothing was changed
 	}
 
 }
