@@ -1,4 +1,4 @@
-package Final_Project;
+package RAS;
 import java.awt.List;
 import java.util.Iterator;
 import java.util.ArrayList;
@@ -59,6 +59,10 @@ public class AccountList{
 			}
 			else if(Position.equals("Cook")){
 				PayRate = 13.0;
+				Hours = 8.0;
+			}
+			else if(Position.equals("Host")){
+				PayRate = 15.0;
 				Hours = 8.0;
 			}
 
