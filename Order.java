@@ -1,36 +1,23 @@
-package Final_Project;
-
-import java.sql.Connection;
-import java.sql.ResultSet;
-import java.sql.Statement;
-
-//import org.apache.commons.lang3.ArrayUtils;
+package RAS;
+import org.apache.commons.lang3.ArrayUtils;
 
 
 
-public class Orders {
-	public Statement myStat;
-	public ResultSet myRs;
-	public int intmyRs;
-	public int exc;
-	public String str;
+public class Order {
+	
 	public int tableNum;
 	public String UserName;
 	public Item[] itemList;
 	public int OrderNum;
 	public double total;
 	
-	public Orders(){}//default constructor
-	Connection conn = Driver.getConnection();
-	
-	public Orders(int tableNum,  String UserName, Item[] itemList, int OrderNum, double total){
+	public Order(int tableNum,  String UserName, Item[] itemList, int OrderNum, double total){
 		this.tableNum = tableNum;
 		this.UserName = UserName;
 		this.itemList = itemList;
 		this.OrderNum = OrderNum;
 		this.total = total;
 	}
-
 
 	public int getTableNum() {
 		return tableNum;
@@ -84,62 +71,24 @@ public class Orders {
 		return parsedItems;
 	}
 	
-//	public Item[] deleteItem(Order order,int itemID){
-//		Item[] list = order.getItemList();
-//		for(int i=0;i<list.length;i++){
-//			if(list[i].getId()==itemID){
-//				list = ArrayUtils.remove(list, i);
-//		}
-//		
-//	}
-//		return list;
-//	}
-	public boolean VoidItem(int item,int id) {
-		try{
-			String collect="";
-
-			Statement myStmt = conn.createStatement();//...Create Statement
-			myRs = myStmt.executeQuery("select * from orders WHERE Order_Num = "+id+";");//...Execute SQL query Table chooseing the OrderNum
-
-			while (myRs.next()){
-				collect=myRs.getString("Item_List");
-
-				StringBuilder bulid = new StringBuilder(collect);
-				
-				for(int i=0;i<collect.length();i++)
-				{
-					int compare=Character.getNumericValue(collect.charAt(i));
-					
-					if(compare==item){//go through each charater and compare item that integer thats input
-						
-						bulid.deleteCharAt(i); 
-						collect=bulid.toString();
-						intmyRs = myStmt.executeUpdate("update orders set Item_List = '"+collect+"' WHERE Order_Num = "+id+";");		
-					}
-					//else
-					//	System.out.println("nothing in here");
-				}
-
-
-			}
+	public Item[] deleteItem(Order order,int itemID){
+		Item[] list = order.getItemList();
+		for(int i=0;i<list.length;i++){
+			if(list[i].getId()==itemID){
+				list = ArrayUtils.remove(list, i);
 		}
-		catch(Exception exc){
-			
-			return false;
-
-		}
-		return true;
-
+		
 	}
-
+		return list;
+	}
 	
 	public String toString(){
 		String displayItems ="";
 		for(int i=0;i<itemList.length;i++){
 			displayItems += itemList[i].getItemName()+" ";
 		}
-		String orderToString = "Order: "+OrderNum+"\n"+"Table No: "+tableNum +"\n"+ "User: "+UserName +"\n"+"Total: "+ total+ "\n"
-				+ "Items: "+ displayItems;
+		String orderToString = "Order: "+OrderNum+"\n"+"Table No: "+tableNum +"\n"+ "User: "+UserName +"\n"+"Total: "+ total+ "\n";
+			//	+ "Items: "+ displayItems;
 			
 		
 		return orderToString;
