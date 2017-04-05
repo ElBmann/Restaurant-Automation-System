@@ -1,4 +1,4 @@
-package Final_Project;
+package RAS;
 
 public class Item {
 	
@@ -40,7 +40,7 @@ public class Item {
 		this.ItemType = ItemType;
 	}
 	
-	public double ItemPrice(){
+	public double getItemPrice(){
 		return ItemPrice;
 	}
 	
